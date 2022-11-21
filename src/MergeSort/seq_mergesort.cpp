@@ -1,7 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 using namespace std;
+
+void generateRandomArray(int *array, int n) {
+  srand(time(NULL));
+  for (int i = 0; i < n; i++) {
+    int num = rand() % 100;
+    array[i] = num;
+  }
+}
 
 // Merge two sorted subarrays
 void merge(int arr[], int left, int mid, int right) {
@@ -70,11 +79,12 @@ void printArray(int *arr, int length) {
 }
 
 int main() {
-  int arr[10] = {2, 4, 6, 1, 9, 3, 10, 5, 8, 7};
-  int len = sizeof(arr) / sizeof(arr[0]);
+  int n = 10;
+  int arr[n];
+  generateRandomArray(arr, n);
 
-  printArray(arr, len);
-  mergesort(arr, 0, len - 1);
-  printArray(arr, len);
+  printArray(arr, n);
+  mergesort(arr, 0, n - 1);
+  printArray(arr, n);
   return 0;
 }
