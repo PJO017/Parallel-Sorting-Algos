@@ -2,6 +2,7 @@
 #include <queue>
 #include <vector>
 #include <cmath>
+#include <array>
 #include <algorithm>
 
 using namespace std;
