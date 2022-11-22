@@ -1,13 +1,18 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include <cctype>
+#include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <ostream>
 
 using namespace std;
+using namespace std::chrono;
+using std::stoi;
 
 void generateRandomArray(int *array, int n) {
   srand(time(NULL));
   for (int i = 0; i < n; i++) {
-    int num = rand() % 100;
+    int num = rand() % 10000;
     array[i] = num;
   }
 }
@@ -58,14 +63,14 @@ void merge(int arr[], int left, int mid, int right) {
   }
 }
 
-void mergesort(int arr[], int left, int right) {
+void mergeSort(int arr[], int left, int right) {
   // If left is equal to right then there is only one element
   if (left < right) {
     int mid = left + (right - left) / 2;
 
     // Recursively sort left and right half
-    mergesort(arr, left, mid);
-    mergesort(arr, mid + 1, right);
+    mergeSort(arr, left, mid);
+    mergeSort(arr, mid + 1, right);
 
     merge(arr, left, mid, right);
   }
@@ -78,13 +83,17 @@ void printArray(int *arr, int length) {
   printf("\n");
 }
 
-int main() {
-  int n = 10;
+int main(int argc, char *argv[]) {
+  int n = stoi(argv[1]);
   int arr[n];
   generateRandomArray(arr, n);
 
-  printArray(arr, n);
-  mergesort(arr, 0, n - 1);
-  printArray(arr, n);
+  auto start = high_resolution_clock::now();
+  mergeSort(arr, 0, n - 1);
+  auto stop = high_resolution_clock::now();
+  auto duration = duration_cast<microseconds>(stop - start);
+
+  cout << duration.count() << " ms" << endl;
+
   return 0;
 }
