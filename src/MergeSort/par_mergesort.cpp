@@ -1,3 +1,4 @@
+#include "../utils/generateInput.h"
 #include "omp.h"
 #include <cctype>
 #include <chrono>
@@ -98,21 +99,6 @@ void mergeSort(int *array, int n) {
 #pragma omp parallel
 #pragma omp single nowait
   mergeSortRecursive(array, 0, n);
-}
-
-void generateRandomArray(int *array, int n) {
-  srand(time(NULL));
-  for (int i = 0; i < n; i++) {
-    int num = rand() % 10000;
-    array[i] = num;
-  }
-}
-
-void printArray(int *arr, int length) {
-  for (int i = 0; i < length; i++) {
-    printf("%d ", arr[i]);
-  }
-  printf("\n");
 }
 
 int main(int argc, char *argv[]) {

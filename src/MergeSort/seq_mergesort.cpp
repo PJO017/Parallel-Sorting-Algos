@@ -1,3 +1,4 @@
+#include "../utils/generateInput.h"
 #include <cctype>
 #include <chrono>
 #include <cstdlib>
@@ -8,14 +9,6 @@
 using namespace std;
 using namespace std::chrono;
 using std::stoi;
-
-void generateRandomArray(int *array, int n) {
-  srand(time(NULL));
-  for (int i = 0; i < n; i++) {
-    int num = rand() % 10000;
-    array[i] = num;
-  }
-}
 
 // Merge two sorted subarrays
 void merge(int arr[], int left, int mid, int right) {
