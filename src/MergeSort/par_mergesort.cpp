@@ -1,4 +1,5 @@
 #include "../utils/generateInput.h"
+#include "omp.h"
 #include <cctype>
 #include <chrono>
 #include <cstdlib>
@@ -56,24 +57,48 @@ void merge(int arr[], int left, int mid, int right) {
   }
 }
 
-void mergeSort(int arr[], int left, int right) {
+void mergeSortSeq(int arr[], int left, int right) {
   // If left is equal to right then there is only one element
   if (left < right) {
     int mid = left + (right - left) / 2;
 
     // Recursively sort left and right half
-    mergeSort(arr, left, mid);
-    mergeSort(arr, mid + 1, right);
+    mergeSortSeq(arr, left, mid);
+    mergeSortSeq(arr, mid + 1, right);
 
     merge(arr, left, mid, right);
   }
 }
 
-void printArray(int *arr, int length) {
-  for (int i = 0; i < length; i++) {
-    printf("%d ", arr[i]);
+void mergeSortRecursive(int array[], int left, int right) {
+  if (left < right) {
+    if ((right - left) >= 1000) {
+      int mid = (left + right) / 2;
+#pragma omp taskgroup
+      {
+#pragma omp task shared(array) untied if (right - left >= (1 << 14))
+        {
+          mergeSortRecursive(array, left,
+                             mid); // One thread sort left sub-array
+        }
+#pragma omp task shared(array) untied if (right - left >= (1 << 14))
+        {
+          mergeSortRecursive(array, mid + 1,
+                             right); // One thread sort right sub-array
+        }
+#pragma omp taskyield
+        merge(array, left, mid, right); // Merge the two sorted sub-arrays
+      }
+    } else {
+      mergeSortSeq(array, left, right);
+    }
   }
-  printf("\n");
+}
+
+void mergeSort(int *array, int n) {
+#pragma omp parallel
+#pragma omp single nowait
+  mergeSortRecursive(array, 0, n);
 }
 
 int main(int argc, char *argv[]) {
@@ -82,9 +107,9 @@ int main(int argc, char *argv[]) {
   generateRandomArray(arr, n);
 
   auto start = high_resolution_clock::now();
-  mergeSort(arr, 0, n - 1);
+  mergeSort(arr, n);
   auto stop = high_resolution_clock::now();
-  auto duration = duration_cast<microseconds>(stop - start);
+  auto duration = duration_cast<milliseconds>(stop - start);
 
   cout << duration.count() << " ms" << endl;
 
