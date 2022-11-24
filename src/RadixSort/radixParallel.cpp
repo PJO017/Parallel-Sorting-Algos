@@ -33,6 +33,7 @@ void radixSortPass(vector<int> &nums, int exponent)
         count[bIdx]--;
     }
 
+#pragma omp parallel for
     for (int i = 0; i < nums.size(); i++)
         nums[i] = output[i];
 }
