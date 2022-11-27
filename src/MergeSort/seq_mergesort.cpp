@@ -1,14 +1,12 @@
 #include "../utils/generateInput.h"
 #include <cctype>
 #include <chrono>
-#include <cstdlib>
 #include <ctime>
 #include <iostream>
-#include <ostream>
+#include <string.h>
 
 using namespace std;
 using namespace std::chrono;
-using std::stoi;
 
 // Merge two sorted subarrays
 void merge(int arr[], int left, int mid, int right) {
@@ -69,24 +67,22 @@ void mergeSort(int arr[], int left, int right) {
   }
 }
 
-void printArray(int *arr, int length) {
-  for (int i = 0; i < length; i++) {
-    printf("%d ", arr[i]);
-  }
-  printf("\n");
-}
-
 int main(int argc, char *argv[]) {
-  int n = stoi(argv[1]);
+  int n = atoi(argv[1]);
   int arr[n];
-  generateRandomArray(arr, n);
+
+  if (argc > 2 && strcmp(argv[2], "-r") == 0) {
+    generateReverseSortedArray(arr, n);
+  } else {
+    generateRandomArray(arr, n);
+  }
 
   auto start = high_resolution_clock::now();
   mergeSort(arr, 0, n - 1);
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>(stop - start);
 
-  cout << duration.count() << " ms" << endl;
+  cout << duration.count() << " μs" << endl;
 
   return 0;
 }

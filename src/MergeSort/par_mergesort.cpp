@@ -3,13 +3,11 @@
 #include <cctype>
 #include <chrono>
 #include <cstdlib>
-#include <ctime>
 #include <iostream>
-#include <ostream>
+#include <string.h>
 
 using namespace std;
 using namespace std::chrono;
-using std::stoi;
 
 // Merge two sorted subarrays
 void merge(int arr[], int left, int mid, int right) {
@@ -102,16 +100,21 @@ void mergeSort(int *array, int n) {
 }
 
 int main(int argc, char *argv[]) {
-  int n = stoi(argv[1]);
+  int n = atoi(argv[1]);
   int arr[n];
-  generateRandomArray(arr, n);
+
+  if (argc > 2 && strcmp(argv[2], "-r") == 0) {
+    generateReverseSortedArray(arr, n);
+  } else {
+    generateRandomArray(arr, n);
+  }
 
   auto start = high_resolution_clock::now();
   mergeSort(arr, n);
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<milliseconds>(stop - start);
 
-  cout << duration.count() << " ms" << endl;
+  cout << duration.count() << " μs" << endl;
 
   return 0;
 }
