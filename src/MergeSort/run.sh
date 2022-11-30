@@ -10,7 +10,7 @@ echo "---Sequential Merge Sort---"
 echo ""
 echo "Random Input:"
 for i in "${sizes[@]}"; do
-  time=$(./seq_mergesort "$i")
+  time=$(./seq_mergesort.o "$i")
   echo "size: $i -> $time" 
 done
 
@@ -18,7 +18,7 @@ echo ""
 
 echo "Reverse Sorted Input:"
 for i in "${sizes[@]}"; do
-  time=$(./seq_mergesort "$i" "-r")
+  time=$(./seq_mergesort.o "$i" "-r")
   echo "size: $i -> $time" 
 done
 
@@ -28,7 +28,7 @@ echo "---Parallel Merge Sort---"
 echo ""
 echo "Random Input:"
 for i in "${sizes[@]}"; do
-  time=$(./par_mergesort "$i")
+  time=$(./par_mergesort.o "$i")
   echo "size: $i -> $time" 
 done
 
@@ -36,6 +36,6 @@ echo ""
 
 echo "Reverse Sorted Input:"
 for i in "${sizes[@]}"; do
-  time=$(./par_mergesort "$i" "-r")
+  time=$(./par_mergesort.o "$i" "-r")
   echo "size: $i -> $time" 
 done
