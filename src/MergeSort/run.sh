@@ -15,6 +15,13 @@ for i in "${sizes[@]}"; do
 done
 
 echo ""
+echo "Reverse Sorted Input:"
+for i in "${sizes[@]}"; do
+  time=$(./seq_mergesort.o "$i" "../data/ReverseSorted/reverseSortedArray_$i")
+  echo "size: $i -> $time" 
+done
+
+echo ""
 
 echo "---Parallel Merge Sort---"
 echo ""
@@ -25,3 +32,8 @@ for i in "${sizes[@]}"; do
 done
 
 echo ""
+echo "Reverse Sorted Input:"
+for i in "${sizes[@]}"; do
+  time=$(./par_mergesort.o "$i" "../data/ReverseSorted/reverseSortedArray_$i")
+  echo "size: $i -> $time" 
+done
