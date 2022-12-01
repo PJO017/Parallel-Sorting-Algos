@@ -1,4 +1,4 @@
-#include "../utils/generateInput.h"
+#include "../utils/readData.h"
 #include <cctype>
 #include <chrono>
 #include <ctime>
@@ -68,17 +68,14 @@ void mergeSort(int arr[], int left, int right) {
 }
 
 int main(int argc, char *argv[]) {
-  int n = atoi(argv[1]);
-  int arr[n];
+  int size = atoi(argv[1]);
+  string filename = argv[2];
+  int arr[size];
 
-  if (argc > 2 && strcmp(argv[2], "-r") == 0) {
-    generateReverseSortedArray(arr, n);
-  } else {
-    generateRandomArray(arr, n);
-  }
+  readData(filename, arr, size);
 
   auto start = high_resolution_clock::now();
-  mergeSort(arr, 0, n - 1);
+  mergeSort(arr, 0, size - 1);
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<microseconds>(stop - start);
 

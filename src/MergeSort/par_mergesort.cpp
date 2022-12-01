@@ -1,10 +1,11 @@
-#include "../utils/generateInput.h"
+#include "../utils/readData.h"
 #include "omp.h"
 #include <cctype>
 #include <chrono>
 #include <cstdlib>
 #include <iostream>
-#include <string.h>
+#include <stdlib.h>
+#include <string>
 
 using namespace std;
 using namespace std::chrono;
@@ -100,17 +101,14 @@ void mergeSort(int *array, int n) {
 }
 
 int main(int argc, char *argv[]) {
-  int n = atoi(argv[1]);
-  int arr[n];
+  int size = atoi(argv[1]);
+  string filename = argv[2];
+  int arr[size];
 
-  if (argc > 2 && strcmp(argv[2], "-r") == 0) {
-    generateReverseSortedArray(arr, n);
-  } else {
-    generateRandomArray(arr, n);
-  }
+  readData(filename, arr, size);
 
   auto start = high_resolution_clock::now();
-  mergeSort(arr, n);
+  mergeSort(arr, size);
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<milliseconds>(stop - start);
 
