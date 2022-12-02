@@ -37,3 +37,7 @@ for i in "${sizes[@]}"; do
   time=$(./par_mergesort.o "$i" "../data/ReverseSorted/reverseSortedArray_$i")
   echo "size: $i -> $time" 
 done
+
+rm seq_mergesort.o par_mergesort.o
+echo ""
+echo "done."
