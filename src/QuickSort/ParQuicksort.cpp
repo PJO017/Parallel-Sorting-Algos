@@ -43,16 +43,15 @@ public:
   void quickSort(int arr[], int l, int r) {
     if (l < r) {
       int p = partition(arr, l, r);
-      cout << "pivot " << p << " found by thread no. " << k << endl;
 
-#pragma omp single nowait
+#pragma omp parallel sections
       {
-#pragma omp task
+#pragma omp section
         {
           k = k + 1;
           quickSort(arr, l, p - 1);
         }
-#pragma omp task
+#pragma omp section
         {
           k = k + 1;
           quickSort(arr, p + 1, r);
