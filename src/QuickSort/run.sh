@@ -15,6 +15,13 @@ for i in "${sizes[@]}"; do
 done
 
 echo ""
+echo "Sorted Input:"
+for i in "${sizes[@]}"; do
+  time=$(./SeqQuicksort.o.o "$i" "../data/Sorted/sorted_$i")
+  echo "size: $i -> $time" 
+done
+
+echo ""
 echo "Reverse Sorted Input:"
 for i in "${sizes[@]}"; do
   time=$(./SeqQuicksort.o "$i" "../data/ReverseSorted/reverseSortedArray_$i")
@@ -32,8 +39,19 @@ for i in "${sizes[@]}"; do
 done
 
 echo ""
+echo "Sorted Input:"
+for i in "${sizes[@]}"; do
+  time=$(./ParQuicksort.o "$i" "../data/Sorted/sorted_$i")
+  echo "size: $i -> $time" 
+done
+
+echo ""
 echo "Reverse Sorted Input:"
 for i in "${sizes[@]}"; do
   time=$(./ParQuicksort.o "$i" "../data/ReverseSorted/reverseSortedArray_$i")
   echo "size: $i -> $time" 
 done
+
+rm SeqQuicksort.o ParQuicksort.o
+echo ""
+echo "done."

@@ -1,7 +1,6 @@
-#include <ctime>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <random>
 #include <stdlib.h>
 #include <string>
 
@@ -9,8 +8,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
   int size = atoi(argv[1]);
-  string filename =
-      "../data/ReverseSorted/reverseSortedArray_" + to_string(size);
+  string filename = "../data/Sorted/sorted_" + to_string(size);
 
   fstream file;
   file.open(filename, ios::out);
@@ -19,9 +17,17 @@ int main(int argc, char *argv[]) {
   } else {
     std::cout << "File created";
 
-    for (int i = size - 1; i >= 0; i--) {
-      file << i << " ";
+    int arr[size];
+    for (int i = 0; i < size; i++) {
+      arr[i] = i;
     }
+
+    std::sort(arr, arr + size);
+
+    for (int j = 0; j < size; j++) {
+      file << arr[j] << " ";
+    }
+
     file.close();
   }
   return 0;

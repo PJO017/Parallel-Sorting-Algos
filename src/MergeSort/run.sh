@@ -15,11 +15,19 @@ for i in "${sizes[@]}"; do
 done
 
 echo ""
+echo "Sorted Input:"
+for i in "${sizes[@]}"; do
+  time=$(./seq_mergesort.o "$i" "../data/Sorted/sorted_$i")
+  echo "size: $i -> $time" 
+done
+
+echo ""
 echo "Reverse Sorted Input:"
 for i in "${sizes[@]}"; do
   time=$(./seq_mergesort.o "$i" "../data/ReverseSorted/reverseSortedArray_$i")
   echo "size: $i -> $time" 
 done
+
 
 echo ""
 
@@ -28,6 +36,13 @@ echo ""
 echo "Random Input:"
 for i in "${sizes[@]}"; do
   time=$(./par_mergesort.o "$i" "../data/Random/randomArray_$i")
+  echo "size: $i -> $time" 
+done
+
+echo ""
+echo "Sorted Input:"
+for i in "${sizes[@]}"; do
+  time=$(./par_mergesort.o "$i" "../data/Sorted/sorted_$i")
   echo "size: $i -> $time" 
 done
 
