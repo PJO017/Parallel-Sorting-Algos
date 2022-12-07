@@ -44,14 +44,13 @@ public:
     if (l < r) {
       int p = partition(arr, l, r);
 
-#pragma omp parallel sections
       {
-#pragma omp section
+#pragma omp task
         {
           k = k + 1;
           quickSort(arr, l, p - 1);
         }
-#pragma omp section
+#pragma omp task
         {
           k = k + 1;
           quickSort(arr, p + 1, r);
@@ -59,17 +58,15 @@ public:
       }
     }
   }
-  // prints array
-  void printArr(int arr[], int n) {
-    for (int i = 0; i < n; i++)
-      cout << arr[i] << " ";
-    cout << endl;
-  }
   // run the whole procedure
   void run(int *arr, int size) {
 
     auto start = high_resolution_clock::now();
-    quickSort(arr, 0, size - 1);
+#pragma omp parallel
+    {
+#pragma omp single nowait
+      { quickSort(arr, 0, size - 1); }
+    }
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
 
