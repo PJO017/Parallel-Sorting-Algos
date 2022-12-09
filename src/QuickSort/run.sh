@@ -5,7 +5,7 @@ g++ SeqQuicksort.cpp -o SeqQuicksort.o
 g++ ParQuicksort.cpp -fopenmp -o ParQuicksort.o
 
 sizes=(25000 50000 75000 100000 250000 500000 750000 1000000)
-threads=(1 2 4 6)
+threads=(2 4 6)
 
 echo "---Sequential QuickSort Sort---"
 echo ""
