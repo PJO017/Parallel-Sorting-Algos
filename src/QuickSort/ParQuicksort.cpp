@@ -1,6 +1,7 @@
 #include "../utils/readData.h"
 #include <cctype>
 #include <chrono>
+#include <cmath>
 #include <ctime>
 #include <iostream>
 #include <omp.h>
@@ -59,11 +60,11 @@ public:
     }
   }
   // run the whole procedure
-  void run(int *arr, int size) {
+  void run(int *arr, int size, int num_threads) {
 
     auto start = high_resolution_clock::now();
     omp_set_dynamic(0);
-    omp_set_num_threads(6);
+    omp_set_num_threads(num_threads);
 #pragma omp parallel
     {
 #pragma omp single nowait
@@ -79,10 +80,11 @@ public:
 int main(int argc, char *argv[]) {
   int size = atoi(argv[1]);
   string filename = argv[2];
+  int num_threads = atoi(argv[3]);
   int arr[size];
 
   readData(filename, arr, size);
   ParallelQuickSort pqs;
-  pqs.run(arr, size);
+  pqs.run(arr, size, num_threads);
   return 0;
 }
