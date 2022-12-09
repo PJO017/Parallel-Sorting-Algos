@@ -94,8 +94,8 @@ void mergeSortRecursive(int array[], int left, int right) {
   }
 }
 
-void mergeSort(int *array, int n, int num_threads) {
-  omp_set_num_threads(num_threads);
+void mergeSort(int *array, int n) {
+  omp_set_num_threads(6);
 #pragma omp parallel
 #pragma omp single nowait
   mergeSortRecursive(array, 0, n);
@@ -104,13 +104,12 @@ void mergeSort(int *array, int n, int num_threads) {
 int main(int argc, char *argv[]) {
   int size = atoi(argv[1]);
   string filename = argv[2];
-  int num_threads = atoi(argv[3]);
   int arr[size];
 
   readData(filename, arr, size);
 
   auto start = high_resolution_clock::now();
-  mergeSort(arr, size, num_threads);
+  mergeSort(arr, size);
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<milliseconds>(stop - start);
 
